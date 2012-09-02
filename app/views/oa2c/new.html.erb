@@ -1,0 +1,5 @@
+<h2><%= @client.name %> is requiring your resource access</h2>
+
+<%= render 'form', client: @client, response_type: @response_type, redirect_uri: @redirect_uri, action: :deny %>
+<%= render 'form', client: @client, response_type: @response_type, redirect_uri: @redirect_uri, action: :approve %>
+
