@@ -1,6 +1,6 @@
 module Oa2c
   class AuthorizationsController < ActionController::Base
-    before_filter :authorize, except: :token
+    # before_filter :authorize, except: :token
 
     rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
       @error = e
@@ -8,11 +8,11 @@ module Oa2c
     end
 
     def new
-      respond *authorize_endpoint.call(request.env)
+      respond(*authorize_endpoint.call(request.env))
     end
 
     def create
-      respond *authorize_endpoint(true).call(request.env)
+      respond(*authorize_endpoint(true).call(request.env))
     end
 
     def token
@@ -34,7 +34,7 @@ module Oa2c
 
     def authorize_endpoint(allow_approval = false)
       Rack::OAuth2::Server::Authorize.new do |req, res|
-        @client = Auth::Client.where(identifier: req.client_id).first || req.bad_request!
+        @client = Client.where(identifier: req.client_id).first || req.bad_request!
         res.redirect_uri = @redirect_uri = req.verify_redirect_uri!(@client.redirect_uri)
         if allow_approval
           if params[:approve]
@@ -57,18 +57,18 @@ module Oa2c
 
     def token_endpoint
       Rack::OAuth2::Server::Token.new do |req, res|
-        client = Auth::Client.where(identifier: req.client_id).first || req.invalid_client!
+        client = Client.where(identifier: req.client_id).first || req.invalid_client!
         client.secret == req.client_secret || req.invalid_client!
         case req.grant_type
         when :authorization_code
-          code = Auth::AuthorizationCode.valid.where(token: req.code).first
+          code = AuthorizationCode.valid.where(token: req.code).first
           req.invalid_grant! if code.blank? || code.redirect_uri != req.redirect_uri
           res.access_token = code.access_token.to_bearer_token(:with_refresh_token)
-        when :password
-          # NOTE: password is not hashed in this sample app. Don't do the same on your app.
-          # FIXME
-          account = Account.find_by_username_and_password(req.username, req.password) || req.invalid_grant!
-          res.access_token = account.access_tokens.create(:client => client).to_bearer_token(:with_refresh_token)
+        # when :password
+        #   # NOTE: password is not hashed in this sample app. Don't do the same on your app.
+        #   # FIXME
+        #   account = Account.find_by_username_and_password(req.username, req.password) || req.invalid_grant!
+        #   res.access_token = account.access_tokens.create(:client => client).to_bearer_token(:with_refresh_token)
         when :client_credentials
           # NOTE: client is already authenticated here.
           res.access_token = client.access_tokens.create.to_bearer_token
