@@ -1,5 +1,7 @@
 # Oa2c - OAuth2 Container
 
+[![Build Status](https://secure.travis-ci.org/adie/oa2c.png)](http://travis-ci.org/adie/oa2c)
+
 Rails OAuth2 provider engine to support embedded iframe applications from different sites. Just like games on Facebook.
 
 Heavily depends on [rack-oauth2](https://github.com/nov/rack-oauth2) gem.
