@@ -8,6 +8,26 @@ It's mostly extract from [rack-oauth2-sample](https://github.com/nov/rack-oauth2
 
 Right now it supports only Mongoid 3 as ORM.
 
+# Configuration
+
+To change some settings, e.g. user model, add an initializer `config/initializers/oa2c.rb`:
+
+```ruby
+Oa2c.setup do |config|
+  config.user_model = "User"
+end
+```
+
+# User model
+
+You need to add this line to your user model:
+
+```ruby
+  include Oa2c::User
+```
+
+This will add `access_tokens` and `authorization_codes` associations.
+
 # TODO
 
 * Write specs

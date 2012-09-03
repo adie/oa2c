@@ -9,7 +9,7 @@ module Oa2c
       field :token
       field :expires_at, type: Time
 
-      belongs_to :user
+      belongs_to :user, class_name: Oa2c.user_model
       belongs_to :client
 
       before_validation :setup, on: :create
