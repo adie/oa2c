@@ -13,8 +13,8 @@ Gem::Specification.new do |s|
   s.summary     = "OAuth2 authorization for embedded iframe applications."
   s.description = "Rails engine to provide OAuth2 authorization for embedded iframe applications."
 
-  s.files = Dir["{app,config,db,lib}/**/*"] + ["MIT-LICENSE", "Rakefile", "README.md"]
-  s.test_files = Dir["test/**/*"]
+  s.files = `git ls-files`.split("\n")
+  s.test_files = `git ls-files -- {test,spec,features}/*`.split("\n")
 
   s.add_dependency "rails", "~> 3.2.0"
   s.add_dependency "rack-oauth2", "~> 0.14.9"
@@ -22,4 +22,10 @@ Gem::Specification.new do |s|
 
   s.add_development_dependency "rspec-rails"
   s.add_development_dependency "sqlite3"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency "timecop"
+  s.add_development_dependency "capybara"
+  s.add_development_dependency "devise"
+  s.add_development_dependency "factory_girl_rails"
+  s.add_development_dependency "database_cleaner"
 end

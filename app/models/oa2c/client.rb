@@ -5,6 +5,7 @@ module Oa2c
     field :identifier
     field :secret
     field :redirect_uri
+    field :name
 
     has_many :access_tokens
     has_many :refresh_tokens

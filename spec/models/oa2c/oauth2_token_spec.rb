@@ -20,9 +20,11 @@ module Oa2c
       end
 
       it "should set expiring date to default lifetime" do
-        subject.expires_at.should be_blank
-        subject.save
-        subject.expires_at.to_i.should == 15.minutes.from_now.to_i
+        Timecop.freeze do
+          subject.expires_at.should be_blank
+          subject.save
+          subject.expires_at.should == 15.minutes.from_now
+        end
       end
     end
   end
