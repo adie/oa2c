@@ -17,8 +17,12 @@ To change some settings, e.g. user model, add an initializer `config/initializer
 ```ruby
 Oa2c.setup do |config|
   config.user_model = "User"
+  config.authentication_method = :authenticate_user!
+  config.current_user_method = :current_user
 end
 ```
+
+**Note**: these are defaults. You don't need to do anything if you use the same settings
 
 # User model
 
