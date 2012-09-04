@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Oa2c by adie</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Oa2c</h1>
+        <p>OAuth2 authorization for embedded iframe applications</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/adie/oa2c" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/adie/oa2c/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/adie/oa2c/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>Oa2c - OAuth2 Container</h1>
+
+<p><a href="http://travis-ci.org/adie/oa2c"><img src="https://secure.travis-ci.org/adie/oa2c.png" alt="Build Status"></a></p>
+
+<p>Rails OAuth2 provider engine to support embedded iframe applications from different sites. Just like games on Facebook.</p>
+
+<p>Heavily depends on <a href="https://github.com/nov/rack-oauth2">rack-oauth2</a> gem.</p>
+
+<p>It's mostly extract from <a href="https://github.com/nov/rack-oauth2-sample">rack-oauth2-sample</a>.</p>
+
+<p>Right now it supports only Mongoid 3 as ORM.</p>
+
+<h1>Configuration</h1>
+
+<p>To change some settings, e.g. user model, add an initializer <code>config/initializers/oa2c.rb</code>:</p>
+
+<div class="highlight"><pre><span class="no">Oa2c</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">user_model</span> <span class="o">=</span> <span class="s2">"User"</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">authentication_method</span> <span class="o">=</span> <span class="ss">:authenticate_user!</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">current_user_method</span> <span class="o">=</span> <span class="ss">:current_user</span>
+<span class="k">end</span>
+</pre></div>
+
+<p><strong>Note</strong>: these are defaults. You don't need to do anything if you use the same settings</p>
+
+<h1>User model</h1>
+
+<p>You need to add this line to your user model:</p>
+
+<div class="highlight"><pre>  <span class="kp">include</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">User</span>
+</pre></div>
+
+<p>This will add <code>access_tokens</code> and <code>authorization_codes</code> associations.</p>
+
+<h1>TODO</h1>
+
+<ul>
+<li>Write specs</li>
+<li>Support for ActiveRecord</li>
+</ul><h1>License</h1>
+
+<p>See MIT-LICENSE</p>
+
+<h1>Contribute</h1>
+
+<p>Pull requests are more than welcome!</p>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/adie">adie</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
