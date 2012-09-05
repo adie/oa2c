@@ -4,7 +4,7 @@ module Oa2c
     include OAuth2Token
 
     self.default_lifetime = 1.month
-    has_many :access_tokens
+    has_many :access_tokens, autosave: true
   end
 end
 

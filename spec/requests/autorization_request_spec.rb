@@ -2,9 +2,9 @@ require 'spec_helper'
 require 'rack/oauth2'
 
 describe "Authorization request" do
-  let(:client) { Oa2c::Client.create redirect_uri: 'http://example.com/callback' }
+  let(:client) { FactoryGirl.create :client }
 
-  let(:conn) do
+  let(:oauth) do
     Rack::OAuth2::Client.new(
       identifier: client.identifier,
       secret: client.secret,
@@ -18,7 +18,7 @@ describe "Authorization request" do
   context "token request" do
     before do
       sign_in user
-      visit conn.authorization_uri(response_type: :token)
+      visit oauth.authorization_uri(response_type: :token)
     end
 
     it "should show approve/deny buttons" do
@@ -36,7 +36,22 @@ describe "Authorization request" do
   end
 
   context "code request" do
-    before { visit conn.authorization_uri }
-    it { page.status_code.should == 200 }
+    before do
+      sign_in user
+      visit oauth.authorization_uri
+    end
+
+    it "should show approve/deny buttons" do
+      page.should have_button "Approve"
+      page.should have_button "Deny"
+    end
+
+    context "when user clicks on approve" do
+      before { page.click_on "Approve" }
+
+      it "should redirect to callback url" do
+        page.current_url.should =~ /^#{client.redirect_uri}\?code=[^&#]*$/
+      end
+    end
   end
 end

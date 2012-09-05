@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
 
-  def callback
+  def ok
     render :text => 'ok'
   end
 end
