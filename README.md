@@ -19,10 +19,14 @@ Oa2c.setup do |config|
   config.user_model = "User"
   config.authentication_method = :authenticate_user!
   config.current_user_method = :current_user
+  config.find_for_user_password_authentication = proc {|username, password|
+    user = Oa2c.user_model.constantize.where(email: username).first
+    user if user.valid_password? password
+  }
 end
 ```
 
-**Note**: these are defaults. You don't need to do anything if you use the same settings
+**Note**: these are defaults for Devise. You don't need to do anything if you use the same settings
 
 # User model
 

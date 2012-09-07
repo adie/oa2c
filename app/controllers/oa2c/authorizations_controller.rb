@@ -64,16 +64,14 @@ module Oa2c
           code = AuthorizationCode.valid.where(token: req.code).first
           req.invalid_grant! if code.blank? || code.redirect_uri != req.redirect_uri
           res.access_token = code.access_token.to_bearer_token(:with_refresh_token)
-        # when :password
-        #   # NOTE: password is not hashed in this sample app. Don't do the same on your app.
-        #   # FIXME
-        #   account = Account.find_by_username_and_password(req.username, req.password) || req.invalid_grant!
-        #   res.access_token = account.access_tokens.create(:client => client).to_bearer_token(:with_refresh_token)
+        when :password
+          user = Oa2c.find_user_for_password_authentication.call(req.username, req.password) || req.invalid_grant!
+          res.access_token = user.access_tokens.create(:client => client).to_bearer_token(:with_refresh_token)
         when :client_credentials
           # NOTE: client is already authenticated here.
           res.access_token = client.access_tokens.create.to_bearer_token
         when :refresh_token
-          refresh_token = client.refresh_tokens.valid.wehre(token: req.refresh_token).first
+          refresh_token = client.refresh_tokens.valid.where(token: req.refresh_token).first
           req.invalid_grant! unless refresh_token
           res.access_token = refresh_token.access_tokens.create.to_bearer_token
         else
