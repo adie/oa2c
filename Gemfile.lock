@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    oa2c (0.0.1)
+    oa2c (0.0.2)
       mongoid (~> 3.0)
       rack-oauth2 (~> 0.14.9)
       rails (~> 3.2.0)
