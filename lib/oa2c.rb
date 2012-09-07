@@ -12,6 +12,12 @@ module Oa2c
   mattr_accessor :current_user_method
   @@current_user_method = :current_user
 
+  mattr_accessor :find_user_for_password_authentication
+  @@find_user_for_password_authentication = proc {|username, password|
+    user = Oa2c.user_model.constantize.where(email: username).first
+    user if user.valid_password? password
+  }
+
   def self.setup
     yield self
   end
