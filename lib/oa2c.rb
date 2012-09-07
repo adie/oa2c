@@ -3,11 +3,17 @@ require 'mongoid'
 require 'oa2c/engine'
 
 module Oa2c
+  autoload :Authentication, 'oa2c/authentication'
+  autoload :Middleware, 'oa2c/middleware'
+
   mattr_accessor :user_model
   @@user_model = "User"
 
   mattr_accessor :authentication_method
   @@authentication_method = :authenticate_user!
+
+  mattr_accessor :login_method
+  @@login_method = :sign_in
 
   mattr_accessor :current_user_method
   @@current_user_method = :current_user
