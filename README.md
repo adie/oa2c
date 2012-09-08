@@ -20,6 +20,20 @@ Then add this to `config/application.rb`:
 config.middleware.use Oa2c::Middleware
 ```
 
+And add this to your `config/routes.rb`:
+
+```ruby
+mount Oa2c::Engine => "/oauth"
+```
+
+And then you need to add this line to your user model:
+
+```ruby
+  include Oa2c::User
+```
+
+This will add `access_tokens` and `authorization_codes` associations.
+
 # Configuration
 
 To change some settings, e.g. user model, add an initializer `config/initializers/oa2c.rb`:
@@ -38,16 +52,6 @@ end
 ```
 
 **Note**: these are defaults for Devise. You don't need to do anything if you use the same settings
-
-# User model
-
-You need to add this line to your user model:
-
-```ruby
-  include Oa2c::User
-```
-
-This will add `access_tokens` and `authorization_codes` associations.
 
 # License
 
