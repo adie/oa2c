@@ -51,6 +51,32 @@
 
 <p>Right now it supports only Mongoid 3 as ORM.</p>
 
+<h1>Installation</h1>
+
+<p>First of all, add <code>gem 'oa2c'</code> to your Gemfile and bundle it.</p>
+
+<p>Then add this to <code>config/application.rb</code>:</p>
+
+<div class="highlight"><pre>  <span class="n">config</span><span class="o">.</span><span class="n">middleware</span><span class="o">.</span><span class="n">use</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">Middleware</span>
+</pre></div>
+
+<p>And add this to your <code>config/routes.rb</code>:</p>
+
+<div class="highlight"><pre>  <span class="n">mount</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">Engine</span> <span class="o">=&gt;</span> <span class="s2">"/oauth"</span>
+</pre></div>
+
+<p>And then you need to add this line to your user model:</p>
+
+<div class="highlight"><pre>  <span class="kp">include</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">User</span>
+</pre></div>
+
+<p>This will add <code>access_tokens</code> and <code>authorization_codes</code> associations.</p>
+
+<p>And finally add to your controllers that require OAuth2 authentictation:</p>
+
+<div class="highlight"><pre>  <span class="kp">include</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">Authentication</span>
+</pre></div>
+
 <h1>Configuration</h1>
 
 <p>To change some settings, e.g. user model, add an initializer <code>config/initializers/oa2c.rb</code>:</p>
@@ -58,27 +84,20 @@
 <div class="highlight"><pre><span class="no">Oa2c</span><span class="o">.</span><span class="n">setup</span> <span class="k">do</span> <span class="o">|</span><span class="n">config</span><span class="o">|</span>
   <span class="n">config</span><span class="o">.</span><span class="n">user_model</span> <span class="o">=</span> <span class="s2">"User"</span>
   <span class="n">config</span><span class="o">.</span><span class="n">authentication_method</span> <span class="o">=</span> <span class="ss">:authenticate_user!</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">login_method</span> <span class="o">=</span> <span class="ss">:sign_in</span>
   <span class="n">config</span><span class="o">.</span><span class="n">current_user_method</span> <span class="o">=</span> <span class="ss">:current_user</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">find_user_for_password_authentication</span> <span class="o">=</span> <span class="nb">proc</span> <span class="p">{</span><span class="o">|</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">|</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="no">Oa2c</span><span class="o">.</span><span class="n">user_model</span><span class="o">.</span><span class="n">constantize</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">email</span><span class="p">:</span> <span class="n">username</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>
+    <span class="n">user</span> <span class="k">if</span> <span class="n">user</span><span class="o">.</span><span class="n">valid_password?</span> <span class="n">password</span>
+  <span class="p">}</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">auto_approve</span> <span class="o">=</span> <span class="kp">false</span> <span class="c1"># if true, don't show 'approve' / 'deny' buttons to user</span>
+  <span class="n">config</span><span class="o">.</span><span class="n">layout</span> <span class="o">=</span> <span class="kp">false</span> <span class="c1"># flase or symbol, just like in controllers</span>
 <span class="k">end</span>
 </pre></div>
 
-<p><strong>Note</strong>: these are defaults. You don't need to do anything if you use the same settings</p>
+<p><strong>Note</strong>: these are defaults for Devise. You don't need to do anything if you use the same settings</p>
 
-<h1>User model</h1>
-
-<p>You need to add this line to your user model:</p>
-
-<div class="highlight"><pre>  <span class="kp">include</span> <span class="no">Oa2c</span><span class="o">::</span><span class="no">User</span>
-</pre></div>
-
-<p>This will add <code>access_tokens</code> and <code>authorization_codes</code> associations.</p>
-
-<h1>TODO</h1>
-
-<ul>
-<li>Write specs</li>
-<li>Support for ActiveRecord</li>
-</ul><h1>License</h1>
+<h1>License</h1>
 
 <p>See MIT-LICENSE</p>
 
