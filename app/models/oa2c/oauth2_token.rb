@@ -10,7 +10,7 @@ module Oa2c
       field :expires_at, type: Time
 
       belongs_to :user, class_name: Oa2c.user_model
-      belongs_to :client
+      belongs_to :client, class_name: "Oa2c::Client"
 
       before_validation :setup, on: :create
       validates :client, :expires_at, presence: true
