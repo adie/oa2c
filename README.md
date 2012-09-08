@@ -10,6 +10,16 @@ It's mostly extract from [rack-oauth2-sample](https://github.com/nov/rack-oauth2
 
 Right now it supports only Mongoid 3 as ORM.
 
+# Installation
+
+First of all, add `gem 'oa2c'` to your Gemfile and bundle it.
+
+Then add this to `config/application.rb`:
+
+```ruby
+config.middleware.use Oa2c::Middleware
+```
+
 # Configuration
 
 To change some settings, e.g. user model, add an initializer `config/initializers/oa2c.rb`:
