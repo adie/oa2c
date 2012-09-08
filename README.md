@@ -54,6 +54,8 @@ Oa2c.setup do |config|
     user = Oa2c.user_model.constantize.where(email: username).first
     user if user.valid_password? password
   }
+  config.auto_approve = false # if true, don't show 'approve' / 'deny' buttons to user
+  config.layout = false # flase or symbol, just like in controllers
 end
 ```
 

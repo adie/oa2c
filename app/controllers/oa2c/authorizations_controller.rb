@@ -1,6 +1,7 @@
 module Oa2c
   class AuthorizationsController < ApplicationController
     before_filter Oa2c.authentication_method, except: :token
+    layout Oa2c.layout
 
     rescue_from Rack::OAuth2::Server::Authorize::BadRequest do |e|
       @error = e

@@ -27,6 +27,9 @@ module Oa2c
   mattr_accessor :auto_approve
   @@auto_approve = false
 
+  mattr_accessor :layout
+  @@layout = false
+
   def self.setup
     yield self
   end
