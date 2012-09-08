@@ -7,8 +7,8 @@ module Oa2c
     field :redirect_uri
     field :name
 
-    has_many :access_tokens
-    has_many :refresh_tokens
+    has_many :access_tokens, class_name: "Oa2c::AccessToken"
+    has_many :refresh_tokens, class_name: "Oa2c::RefreshToken"
 
     before_validation :setup, on: :create
     validates :secret, presence: true

@@ -4,7 +4,7 @@ module Oa2c
     include Mongoid::Document
     include OAuth2Token
 
-    belongs_to :refresh_token
+    belongs_to :refresh_token, class_name: "Oa2c::RefreshToken"
 
     def to_bearer_token(with_refresh_token = false)
       Rack::OAuth2::AccessToken::Bearer.new(access_token: token, expires_in: expires_in).tap do |bearer_token|
