@@ -24,6 +24,9 @@ module Oa2c
     user if user.valid_password? password
   }
 
+  mattr_accessor :auto_approve
+  @@auto_approve = false
+
   def self.setup
     yield self
   end

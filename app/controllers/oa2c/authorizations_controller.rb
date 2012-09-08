@@ -36,8 +36,8 @@ module Oa2c
       Rack::OAuth2::Server::Authorize.new do |req, res|
         @client = Client.where(identifier: req.client_id).first || req.bad_request!
         res.redirect_uri = @redirect_uri = req.verify_redirect_uri!(@client.redirect_uri)
-        if allow_approval
-          if params[:approve]
+        if allow_approval or Oa2c.auto_approve
+          if params[:approve] or Oa2c.auto_approve
             case req.response_type
             when :code
               authorization_code = send(Oa2c.current_user_method).authorization_codes.create(client_id: @client.id, redirect_uri: res.redirect_uri)
