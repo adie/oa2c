@@ -17,13 +17,13 @@ First of all, add `gem 'oa2c'` to your Gemfile and bundle it.
 Then add this to `config/application.rb`:
 
 ```ruby
-config.middleware.use Oa2c::Middleware
+  config.middleware.use Oa2c::Middleware
 ```
 
 And add this to your `config/routes.rb`:
 
 ```ruby
-mount Oa2c::Engine => "/oauth"
+  mount Oa2c::Engine => "/oauth"
 ```
 
 And then you need to add this line to your user model:
@@ -33,6 +33,12 @@ And then you need to add this line to your user model:
 ```
 
 This will add `access_tokens` and `authorization_codes` associations.
+
+And finally add to your controllers that require OAuth2 authentictation:
+
+```ruby
+  include Oa2c::Authentication
+```
 
 # Configuration
 
@@ -44,7 +50,7 @@ Oa2c.setup do |config|
   config.authentication_method = :authenticate_user!
   config.login_method = :sign_in
   config.current_user_method = :current_user
-  config.find_for_user_password_authentication = proc {|username, password|
+  config.find_user_for_password_authentication = proc {|username, password|
     user = Oa2c.user_model.constantize.where(email: username).first
     user if user.valid_password? password
   }
