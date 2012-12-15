@@ -4,7 +4,6 @@ require 'devise'
 require File.expand_path("../dummy/config/environment.rb",  __FILE__)
 require 'rspec/rails'
 require 'timecop'
-require 'capybara/rails'
 require 'factory_girl_rails'
 require 'database_cleaner'
 
@@ -35,5 +34,7 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.backtrace_clean_patterns = []
+  config.backtrace_clean_patterns = [
+    /lib\/rspec\/(core|expectations|matchers|mocks)/
+  ]
 end

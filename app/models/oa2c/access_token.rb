@@ -1,4 +1,3 @@
-require 'oa2c/oauth2_token'
 module Oa2c
   class AccessToken
     include Mongoid::Document

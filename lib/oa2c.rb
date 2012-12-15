@@ -6,6 +6,8 @@ module Oa2c
   autoload :Authentication, 'oa2c/authentication'
   autoload :Middleware, 'oa2c/middleware'
 
+  autoload :OAuth2Token, 'oa2c/oauth2_token'
+
   mattr_accessor :user_model
   @@user_model = "User"
 
