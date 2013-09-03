@@ -17,4 +17,4 @@ gem "jquery-rails"
 # gem 'debugger'
 gem "pry-rails"
 
-gem "coveralls", require: true
+gem "coveralls", require: false
